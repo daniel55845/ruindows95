@@ -15,3 +15,24 @@ O sistema também conta com alguns aplicativos pré-instalados, como Steam, VLC,
 A proposta é combinar a liberdade do Arch Linux, a facilidade de uso do Linux Mint e a beleza questionável dos sistemas operacionais dos anos 90.
 
 Abaixo estão algumas imagens do sistema em funcionamento.
+
+
+
+
+
+<img width="1281" height="778" alt="boas_vindas" src="https://github.com/user-attachments/assets/9ff01b5b-bd7c-4608-a317-4fc6e10c4a10" />
+
+
+
+
+
+
+
+<img width="1279" height="797" alt="BOASVINDAS2" src="https://github.com/user-attachments/assets/5d1b82a8-720d-43d3-9a7d-72040a1483fd" />
+
+
+
+
+
+
+
