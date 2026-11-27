@@ -1,4 +1,4 @@
-<img width="741" height="450" alt="ruindows95_em_pleno_esplendor" src="https://github.com/user-attachments/assets/c65a264a-cc09-4fa2-a9c3-ef457799f73d" />
+<img width="754" height="469" alt="melhor" src="https://github.com/user-attachments/assets/69a5010c-bcad-44b0-bdd4-5eba0eec324f" />
 
 
 ## Ruindows95
