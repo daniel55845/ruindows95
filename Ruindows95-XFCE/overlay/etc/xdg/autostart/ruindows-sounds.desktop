@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Ruindows95 sons do sistema
+Exec=/usr/local/bin/ruindows-sounds
+OnlyShowIn=XFCE;
+Terminal=false

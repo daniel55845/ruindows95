@@ -1,0 +1,35 @@
+{
+  "logo": {
+    "type": "chafa",
+    "source": "~/.config/fastfetch/images/logo.png",
+    "width": 35,
+    "height": 18,
+    "padding": {
+      "right": 2
+    }
+  },
+  "display": {
+    "disableLinewrap": true,
+    "color": {
+      "keys": "#FF1493",
+      "title": "#FF1493"
+    }
+  },
+  "modules": [
+    {
+      "type": "custom",
+      "key": "OS",
+      "format": "Ruindows95 V10.8.2 LTS x86_64"
+    },
+    "host",
+    "uptime",
+    "packages",
+    "display",
+    "cpu",
+    "cpucache",
+    "gpu",
+    "memory",
+    "swap",
+    "disk"
+  ]
+}

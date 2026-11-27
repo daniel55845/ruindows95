@@ -1,0 +1,4 @@
+gems:
+  - arch
+  - flatpak
+  - appimage

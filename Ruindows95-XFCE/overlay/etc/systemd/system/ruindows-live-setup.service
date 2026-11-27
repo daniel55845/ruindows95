@@ -1,0 +1,9 @@
+[Unit]
+Description=Prepare Ruindows95 live account
+Before=lightdm.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/ruindows-live-setup
+RemainAfterExit=yes
+[Install]
+WantedBy=graphical.target

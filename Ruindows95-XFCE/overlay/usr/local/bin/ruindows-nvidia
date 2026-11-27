@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if ! lspci -nn | grep -Ei '(VGA compatible controller|3D controller|Display controller).*\[10de:' >/dev/null; then
+  zenity --info --text='Nenhuma GPU NVIDIA PCI foi identificada.'; exit 0
+fi
+model=$(lspci -nn | grep -Ei '(VGA compatible controller|3D controller|Display controller).*\[10de:' || true)
+zenity --question --width=550 --title='Driver NVIDIA oficial do Arch' --text="GPU encontrada:\n$model\n\nO pacote nvidia-open-lts é destinado a Turing ou posterior. Não use em GTX 10xx ou anteriores. Confirme a compatibilidade do modelo na ArchWiki antes de continuar. A instalação exige internet, atualização completa do sistema e reinicialização. Continuar somente se o modelo for compatível?" || exit 0
+exec xfce4-terminal --hold --execute bash -c 'sudo pacman -Syu --needed nvidia-open-lts nvidia-utils lib32-nvidia-utils nvidia-settings && sudo rm -f /etc/modprobe.d/ruindows-nvidia-open.conf && sudo mkinitcpio -P && echo "Instalação concluída. Reinicie o sistema."'

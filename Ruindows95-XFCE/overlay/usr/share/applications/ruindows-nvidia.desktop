@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Driver NVIDIA (GPU compatível)
+Exec=ruindows-nvidia
+Icon=video-display
+Terminal=false
+Categories=System;Settings;

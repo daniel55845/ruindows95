@@ -1,0 +1,6 @@
+aur: false
+repositories: true
+edit_aur_pkgbuild: true
+refresh_mirrors_startup: false
+sync_databases_startup: false
+prefer_repository_provider: true

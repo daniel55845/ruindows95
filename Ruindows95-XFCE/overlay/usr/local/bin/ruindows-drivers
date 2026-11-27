@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+report=$(mktemp)
+trap 'rm -f "$report"' EXIT
+{
+  printf 'RUINDOWS95 — Hardware e drivers\n\nKernel: '; uname -r
+  printf '\nVirtualização: '; systemd-detect-virt || true
+  printf '\nDispositivos PCI e drivers ativos:\n'; lspci -nnk
+  printf '\nDispositivos USB:\n'; lsusb
+  printf '\nRede:\n'; nmcli device status || true
+  printf '\nBluetooth:\n'; bluetoothctl list || true
+  printf '\nRenderização OpenGL:\n'; glxinfo -B || true
+  printf '\nVulkan:\n'; if command -v vulkaninfo >/dev/null; then timeout 15s vulkaninfo --summary 2>&1 || true; else echo 'Disponível após instalar o sistema.'; fi
+  printf '\nNVIDIA: use Nouveau por padrão. Para Turing ou posterior, consulte a opção NVIDIA no menu.\n'
+} > "$report" 2>&1
+if zenity --text-info --title='Ruindows95 — Hardware e drivers' --filename="$report" --width=850 --height=600 --ok-label='Fechar' --cancel-label='Fechar'; then :; fi

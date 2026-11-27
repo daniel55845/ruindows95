@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Adicionar e remover programas
+Comment=Pacotes Arch, Flatpak e AppImage
+Exec=/usr/local/bin/bauh
+Icon=system-software-install
+Terminal=false
+Categories=System;PackageManager;

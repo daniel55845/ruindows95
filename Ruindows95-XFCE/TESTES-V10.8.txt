@@ -1,0 +1,7 @@
+V10.8 LTS - verificação local
+bash test.sh: PASSOU (inclui testes herdados do Bauh, LTS, Plymouth, Fastfetch, sons e utilitários).
+Listas de pacotes do sistema instalado: iguais à V10.7 LTS-Sons.
+Live compacto e completo: seleção simulada, aprovada.
+Tar/XZ: compressão, xz -t, SHA256, extração, permissões, links simbólicos e hardlinks testados com amostra local.
+Arquivos reais da ISO, drivers e sessão gráfica: não testados (sem mkarchiso/KVM neste ambiente).
+Tamanho final: não medido; meta 2,5–3,0 GB, não garantida.

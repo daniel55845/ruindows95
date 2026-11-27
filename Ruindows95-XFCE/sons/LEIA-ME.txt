@@ -1,0 +1,4 @@
+Áudios fornecidos pelo usuário e convertidos para WAV PCM 16 bits estéreo 48 kHz.
+startup.wav: inicialização do PS2.
+usb.wav: Windows 95 Startup Sound (6.71 s), conexão e desconexão USB.
+Prontos para o build; não é necessário baixar nada do YouTube.

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+getent group autologin >/dev/null || groupadd -r autologin
+id live >/dev/null 2>&1 || useradd -m -s /bin/bash -G autologin live
+passwd -d live >/dev/null
+install -d -o live -g live /home/live/Desktop
+install -o live -g live -m 755 /usr/share/applications/ruindows-install.desktop /home/live/Desktop/ruindows-install.desktop

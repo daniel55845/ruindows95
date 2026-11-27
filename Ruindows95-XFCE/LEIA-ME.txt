@@ -1,0 +1,161 @@
+RUINDOWS95 XFCE OFFLINE — projeto Arch x86-64
+
+No Arch Linux atualizado:
+  sudo pacman -Syu archiso arch-install-scripts grub syslinux dosfstools mtools libisoburn zstd
+  sudo bash build.sh
+ISO em out/. Internet necessária apenas na construção. Reserve 40–50 GB livres.
+A construção prepara uma raiz limpa com pacstrap e inclui uma imagem compactada
+com todos os pacotes instalados. O instalador verifica SHA256 e extrai localmente.
+Não copia o ambiente live, não baixa pacotes nem precisa de rede na instalação.
+Após o boot, clique em Instalar Ruindows95 no desktop XFCE.
+Instalação guiada em terminal, disco inteiro (mínimo 16 GiB), sem dual boot.
+ATENÇÃO: apaga o disco selecionado após confirmação explícita. Faça backup.
+GRUB BIOS Legacy ou UEFI x64 conforme modo de inicialização. Secure Boot não suportado.
+O papel de parede original acompanha o live e o sistema instalado.
+Teste primeiro em VM com disco vazio, adaptador de rede desligado, em ambos os modos.
+Projeto não oficial. ISO não pré-compilada nem testada em execução nesta entrega.
+
+V2: confirmação APAGAR (sem precisar digitar caminho), campos inválidos são solicitados novamente.
+Senha de usuário aceita a partir de 4 caracteres; recomenda-se uma senha longa.
+Tema vermelho Ruindows-Red e wallpaper original aplicados na primeira sessão XFCE.
+
+V3: Fastfetch rosa choque (#FF1493), inicialização automática em Bash local.
+Logo completa a partir de 115 colunas, compacta entre 75 e 114,
+sem logo abaixo de 75. Abaixo de 40, somente OS e memória.
+Linhas longas podem ser cortadas, mas não quebram durante a exibição.
+O comando fastfetch com argumentos continua aceitando opções normalmente.
+
+V4: Chicago95 original baixado do GitHub na construção da ISO. Tema GTK/XFWM,
+ícones e perfil de painel upstream. O login continua usando LightDM GTK.
+O wallpaper original é aplicado após o xfdesktop iniciar, com criação de
+chaves por monitor e workspace. Log: ~/.config/ruindows95/appearance.log.
+Para reaplicar: rm -f ~/.config/ruindows95/wallpaper-v4; ruindows-wallpaper
+Não é necessário internet no computador de destino.
+
+V5: correção da aplicação do Chicago95 e papel de parede. O helper xfconf agora
+atualiza propriedades existentes e cria somente as ausentes, e detecta os nomes
+reais dos monitores XRandR. O tema é reaplicado em cada sessão; o perfil de painel
+Chicago95 é carregado uma vez por usuário. Instalador oferece teclado ABNT2 ou US,
+configurando console e Xorg, e pergunta ao final se deve reiniciar.
+
+
+V6: escolha de drivers, boas-vindas em ASCII rosa e Fastfetch com logo personalizado.
+
+V7: quatro perfis JSON do Fastfetch selecionados por largura do terminal;
+sem flags de logo incompatíveis. Imagem personalizada mantida.
+VirtualBox removido das listas de pacotes e do perfil live; KVM/QEMU e SPICE mantidos.
+Linhas muito longas podem ser cortadas em terminais estreitos.
+
+V8: substitui todos os perfis anteriores por um único config.jsonc.
+ImageMagick e Chafa incluídos no sistema live e instalado. Logo Windows original
+na pasta ~/.config/fastfetch/images/logo.png (35 colunas x 18 linhas), copiável
+via /etc/skel para todos os novos usuários. Módulos padrão do Fastfetch,
+chaves e título rosa choque, sem função de shell que altere a resolução.
+Em janelas pequenas, o texto ou a imagem pode ficar cortado horizontalmente.
+Para editar a imagem, substitua o PNG pessoal; não é necessário sudo.
+
+V9: Fastfetch com módulos explícitos: OS, Host, Uptime, Packages, Display, CPU, CPU Cache, GPU, Memory, Swap e Disk. Valores detectados em tempo real.
+
+V10 (nova linha baseada diretamente na V9): Ruindows95, rótulo RUINDOWS95.
+Uma única edição, kernel Linux padrão. Instalador do sistema continua em terminal.
+Bauh é a loja gráfica do sistema instalado, chamada Adicionar e remover programas.
+Bauh 0.10.7 vem do PyPI, com SHA256 fixado e dependências oficiais do Arch.
+AUR desativado por padrão; sem Yay, sem Go, sem compilação AUR.
+Core, Extra e Multilib; Steam nativa, Flatpak/Flathub e FUSE2 para AppImage.
+Steam exige internet na primeira abertura. Loja exige internet para novos programas.
+Não atualize bases isoladamente (pacman -Sy); atualize o sistema inteiro (pacman -Syu).
+Recomenda-se 50–60 GiB livres para construir e disco virtual de 32 GiB ou maior.
+Bauh não é mantido pelo Arch. Após mudanças de Python, pode precisar de manutenção.
+A ISO não foi compilada neste ambiente; verificação de importação e Flathub no build.
+
+V10.1 — Compatibilidade de hardware
+Bluetooth/Blueman, diagnóstico gráfico de hardware e Vulkan Nouveau (32/64 bits).
+O perfil automático reconhece KVM/QEMU. NVIDIA oficial: atalho opcional, internet e confirmação de modelo Turing ou posterior. O driver não é instalado automaticamente. Sem Yay/AUR.
+
+V10.2 — Bauh e abertura automática do instalador
+Inclui python-colorama e adapta o carregamento de módulos do Bauh 0.10.7
+para a API importlib (correções confirmadas manualmente na VM V10.1).
+O build verifica também as importações do painel e do carregador de módulos.
+Ao entrar no XFCE live, o instalador abre em um terminal automaticamente.
+Pode fechar a janela e reabrir pelo atalho do desktop. Nenhum disco é apagado
+sem a confirmação explícita já existente. O autostart é exclusivo do live,
+não é copiado para a raiz instalada. O Bauh permanece no sistema instalado.
+Testes locais: bash test.sh (inclui regressão em código de exemplo e execução
+fora do live). Build real, sessão XFCE live e loja gráfica ainda não testados
+nesta entrega. Sem Yay ou AUR, preserva drivers e Steam da V10.1.
+
+V10.3: Plymouth com logo fornecido pelo usuário, 36 quadros de rotação, fundo branco.
+Configurado no live e no sistema instalado. Esc alterna para mensagens de boot
+quando suportado. A animação não indica porcentagem real nem garante que todos
+os serviços estejam respondendo. Para diagnosticar, edite a entrada de boot e
+retire quiet splash (GRUB: tecla e; Syslinux: Tab; systemd-boot: e, se permitido).
+As verificações estáticas não substituem um teste real de boot BIOS e UEFI.
+
+
+V10.3.1: imagem do Plymouth trocada para a nova logo enviada pelo usuário.
+
+V10.4 — Kernel LTS
+Sistema instalado: linux-lts (único kernel). O pendrive mantém linux do Archiso
+para preservar a compatibilidade dos caminhos de boot BIOS/UEFI oficiais.
+O atalho NVIDIA usa nvidia-open-lts; apenas GPUs compatíveis.
+O build confirma pacote e arquivos do kernel LTS; o instalador verifica initramfs
+e entrada GRUB antes de anunciar sucesso. Após instalar, confira uname -r.
+
+V10.5 — Fastfetch
+Exibe OS: Ruindows95 V10.5 LTS x86_64 no lugar do nome do Arch.
+Alteração apenas visual; /etc/os-release permanece como Arch Linux.
+Imagem, cores, dimensões e demais módulos preservados. O rótulo da versão
+é fixo e identifica a edição (no live o kernel continua sendo o do Archiso).
+
+V10.6 — Utilitários essenciais
+Galculator, Ristretto, VLC (com vlc-plugins-extra), GNOME Disks,
+System Config Printer e Htop. Pacotes oficiais do Arch no live e na raiz
+offline instalada. CUPS e cups-pk-helper para configuração de impressoras;
+cups.socket é habilitado no sistema instalado para iniciar o serviço sob demanda.
+Modelos específicos podem exigir drivers adicionais. Fastfetch exibe V10.6 LTS.
+Sem instalação do ambiente GNOME completo; sem novos repositórios ou AUR.
+
+V10.7 — Sons de sessão e USB
+Os dois áudios enviados pelo usuário estão incorporados em sons/:
+  startup.wav — Playstation 2 Startup Noise (20,39 s)
+  usb.wav — Roblox Death Sound (Oof) (3,02 s)
+Ambos em WAV PCM 16 bits, estéreo, 48 kHz. Não é necessário baixar áudio,
+instalar yt-dlp/ffmpeg nem executar preparar-sons.sh para compilar esta versão.
+O preparador permanece disponível caso queira substituir os sons no futuro.
+O build falha cedo se faltarem os arquivos. O serviço roda na sessão XFCE
+(sem sudo), aguarda o áudio e usa PipeWire. Toca o mesmo som ao conectar ou
+retirar dispositivos USB físicos (incluindo mouse e teclado; exclui hubs e
+interfaces). Não toca para dispositivos já presentes no login. Redirecionamento
+USB SPICE/virt-manager deve produzir eventos reais no convidado. Não toca para
+mero desmonte de uma partição sem remoção do dispositivo.
+Para distribuição pública, obtenha as permissões/licenças dos sons escolhidos.
+
+V10.8 LTS — ISO compacta
+Meta: 2,5 a 3,0 GB decimais, sem garantia de tamanho antes do build real.
+A raiz offline agora usa tar.xz (XZ -6e) com SHA256; o instalador e seu
+atalho automático usam o novo nome. O tar mantém permissões, proprietários,
+links, ACLs e atributos estendidos. A imagem live usa SquashFS/XZ.
+Não são removidos pacotes, firmware, sons ou recursos do sistema instalado.
+No Live compacto, Firefox, VLC, GNOME Disks e gerenciamento de impressoras
+não são solicitados diretamente (podem entrar como dependências do perfil).
+Esses programas permanecem pré-instalados após instalação offline.
+Galculator, Ristretto, Htop, XFCE e os recursos de instalação ficam no Live.
+Para pedir a lista Live completa anterior: sudo env RUINDOWS_FULL_LIVE=1 bash build.sh
+A compactação mais forte usa 2 threads por padrão; para alterar:
+  sudo env RUINDOWS_COMPRESSION_THREADS=4 bash build.sh
+Aceita 1 a 8 threads. Limite XZ: 2 GiB de memória para compressão.
+Os initramfs LTS pré-gerados não são guardados no payload: o instalador
+já os recria com mkinitcpio -P antes de configurar o GRUB.
+A economia depende dos pacotes atuais e do perfil releng; o build informa
+os bytes da ISO em out/ e avisa acima de 3 GB, sem remover recursos extras.
+A compactação tende a demorar mais. Reserve 60 GB ou mais para o build.
+Testado: regressões anteriores, listas de pacotes, tar/XZ/SHA256 e restauração
+com permissões e links em amostra local. Build Archiso/boot real pendentes.
+
+V10.8.1 LTS — som USB do Windows 95
+Substitui o Oof por Windows 95 Startup Sound (6.71 s), inteiro, em WAV PCM estéreo 48 kHz.
+Mantém a inicialização do PlayStation 2 e a compactação da V10.8.
+O limite do WAV USB passou a 10 segundos. O preparador opcional aceita arquivos locais.
+
+
+V10.8.2: splash screen com fundo vermelho-sangue e textos maiores.

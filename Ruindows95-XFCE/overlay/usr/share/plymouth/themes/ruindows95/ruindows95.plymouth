@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Ruindows95
+Description=Logo giratorio
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/ruindows95
+ScriptFile=/usr/share/plymouth/themes/ruindows95/ruindows95.script

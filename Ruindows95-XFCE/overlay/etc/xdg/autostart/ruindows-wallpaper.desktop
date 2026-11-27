@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Ruindows95 wallpaper
+Exec=/usr/local/bin/ruindows-wallpaper
+OnlyShowIn=XFCE;
+X-GNOME-Autostart-enabled=true
+Terminal=false

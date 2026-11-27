@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Desktop session sounds. No root access, no audio from udev workers."""
+import fcntl
+import os
+from pathlib import Path
+import queue
+import subprocess
+import threading
+import time
+
+SOUNDS = Path('/usr/share/ruindows95/sounds')
+
+
+def physical_device(device):
+    # Only a whole USB device, not its interfaces or a root/external hub.
+    if device.device_type != 'usb_device' or device.sys_name.startswith('usb'):
+        return False
+    try:
+        return device.attributes.asstring('bDeviceClass').strip().lower() != '09'
+    except (KeyError, OSError):
+        return False
+
+
+class USBEvents:
+    def __init__(self, initial=()):
+        self.present = set(initial)
+
+    def event(self, action, path, eligible=False):
+        if action == 'add' and eligible and path not in self.present:
+            self.present.add(path)
+            return True
+        if action == 'remove' and path in self.present:
+            self.present.remove(path)
+            return True
+        return False
+
+
+def play(name, wait=False):
+    path = SOUNDS / name
+    if not path.is_file():
+        return
+    for _ in range(20 if wait else 1):
+        try:
+            ready = subprocess.run(['wpctl', 'get-volume', '@DEFAULT_AUDIO_SINK@'],
+                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                   timeout=2).returncode == 0
+            if ready:
+                subprocess.run(['pw-play', str(path)], timeout=30, check=False)
+                return
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+        if wait:
+            time.sleep(0.5)
+
+
+def main():
+    import pyudev
+    runtime = os.environ.get('XDG_RUNTIME_DIR')
+    if not runtime or os.geteuid() == 0:
+        return
+    with open(Path(runtime) / 'ruindows-sounds.lock', 'a') as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return
+        context = pyudev.Context()
+        monitor = pyudev.Monitor.from_netlink(context)
+        monitor.filter_by('usb', 'usb_device')
+        monitor.start()
+        events = USBEvents(d.sys_path for d in context.list_devices(subsystem='usb', DEVTYPE='usb_device')
+                           if physical_device(d))
+        pending = queue.Queue(maxsize=8)
+
+        def audio_worker():
+            play('startup.wav', wait=True)
+            while True:
+                pending.get()
+                play('usb.wav')
+
+        threading.Thread(target=audio_worker, daemon=True).start()
+        while True:
+            device = monitor.poll()
+            if device is None:
+                continue
+            eligible = device.action == 'add' and physical_device(device)
+            if events.event(device.action, device.sys_path, eligible):
+                try:
+                    pending.put_nowait(True)
+                except queue.Full:
+                    pass
+
+
+if __name__ == '__main__':
+    main()

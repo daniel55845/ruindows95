@@ -1,0 +1,11 @@
+OK: sintaxe, lista de pacotes, configuração da loja, repositórios e arquivos.
+OK: integração estática dos drivers.
+OK: compatibilidade de importação do Bauh.
+OK: compatibilidade de importação do Bauh.
+OK: regressão de importação e proteção do autostart fora do live.
+Plymouth: 3 live boot entries configured
+OK: 36 quadros distintos e configuração de boot BIOS/UEFI simulada.
+OK: LTS no sistema instalado, kernel oficial no live e NVIDIA LTS.
+OK: nome do OS no Fastfetch, demais módulos e aparência preservados.
+
+Limites: verificações estáticas e simuladas; Fastfetch, compilação ISO e boot reais não executados neste ambiente.

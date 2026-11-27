@@ -1,0 +1,22 @@
+Window.SetBackgroundTopColor(0.36, 0.0, 0.03);
+Window.SetBackgroundBottomColor(0.36, 0.0, 0.03);
+for (i = 0; i < 36; i++) {
+    frames[i] = Image("frame-" + i + ".png");
+}
+logo = Sprite(frames[0]);
+label_image = Image("label.png");
+label = Sprite(label_image);
+status_image = Image("status.png");
+status = Sprite(status_image);
+step = 0;
+fun refresh_callback () {
+    logo.SetImage(frames[Math.Int(step / 3) % 36]);
+    logo.SetX(Window.GetX() + (Window.GetWidth() - 240) / 2);
+    logo.SetY(Window.GetY() + (Window.GetHeight() - 240) / 2 - 45);
+    label.SetX(Window.GetX() + (Window.GetWidth() - label_image.GetWidth()) / 2);
+    label.SetY(Window.GetY() + Window.GetHeight() / 2 + 88);
+    status.SetX(Window.GetX() + (Window.GetWidth() - status_image.GetWidth()) / 2);
+    status.SetY(Window.GetY() + Window.GetHeight() / 2 + 132);
+    step++;
+}
+Plymouth.SetRefreshFunction(refresh_callback);

@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Apply Chicago95 and the bundled wallpaper inside the logged-in XFCE session.
+set -u
+wall=/usr/share/backgrounds/ruindows95/wallpaper.png
+state="$HOME/.config/ruindows95"
+mkdir -p "$state"
+[[ -r "$wall" ]] || exit 1
+exec >>"$state/appearance.log" 2>&1
+
+# xfconf-query -n fails when a property already exists. Update existing
+# properties and create only missing ones.
+setprop() {
+  local channel=$1 property=$2 type=$3 value=$4
+  if xfconf-query -c "$channel" -p "$property" >/dev/null 2>&1; then
+    xfconf-query -c "$channel" -p "$property" -s "$value"
+  else
+    xfconf-query -c "$channel" -p "$property" --create -t "$type" -s "$value"
+  fi
+}
+
+# Wait until the XFCE session and xfconf channels are ready.
+for ((i=0;i<60;i++)); do
+  if pgrep -u "$UID" -x xfdesktop >/dev/null 2>&1 && xfconf-query -c xsettings -l >/dev/null 2>&1; then
+    break
+  fi
+  sleep 1
+done
+sleep 2
+
+# Load the upstream Chicago95 panel profile once per user. Theme settings are
+# applied on every login so they recover if a user or another tool changed them.
+if [[ ! -e "$state/chicago95-panel-v5" ]]; then
+  if command -v xfce4-panel-profiles >/dev/null 2>&1 && [[ -r /usr/share/ruindows-appearance/panel.tar.bz2 ]]; then
+    xfce4-panel-profiles load /usr/share/ruindows-appearance/panel.tar.bz2 || true
+  fi
+  touch "$state/chicago95-panel-v5"
+fi
+setprop xsettings /Net/ThemeName string Chicago95 || true
+setprop xsettings /Net/IconThemeName string Chicago95 || true
+setprop xfwm4 /general/theme string Chicago95 || true
+setprop xfwm4 /general/title_font string 'Sans Bold 8' || true
+setprop xfce4-notifyd /theme string Chicago95 || true
+
+# Discover actual XRandR monitor names (e.g. eDP-1, HDMI-1), not numeric
+# guesses. XFCE stores wallpaper separately for each monitor/workspace.
+mapfile -t monitors < <(xrandr --listmonitors 2>/dev/null | awk 'NR>1 {print $NF}' | sort -u)
+if ((${#monitors[@]} == 0)); then
+  mapfile -t monitors < <(xfconf-query -c xfce4-desktop -l 2>/dev/null | sed -nE 's@^/backdrop/screen[0-9]+/monitor([^/]+)/.*@\1@p' | sort -u)
+fi
+if ((${#monitors[@]} == 0)); then
+  monitors=(0)
+fi
+workspace_count=$(xfconf-query -c xfwm4 -p /general/workspace_count 2>/dev/null || printf '4')
+[[ "$workspace_count" =~ ^[0-9]+$ ]] || workspace_count=4
+((workspace_count > 0 && workspace_count < 33)) || workspace_count=4
+
+ok=0
+for monitor in "${monitors[@]}"; do
+  for ((workspace=0; workspace<workspace_count; workspace++)); do
+    base="/backdrop/screen0/monitor${monitor}/workspace${workspace}"
+    if setprop xfce4-desktop "$base/last-image" string "$wall" &&        setprop xfce4-desktop "$base/image-style" int 5; then
+      ok=1
+    fi
+  done
+done
+xfdesktop --reload || true
+if ((ok)); then
+  touch "$state/wallpaper-v5"
+  echo "Chicago95 e papel de parede aplicados em: ${monitors[*]}"
+else
+  echo 'Não foi possível criar as propriedades de papel de parede do XFCE.'
+fi

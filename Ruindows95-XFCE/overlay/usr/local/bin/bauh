@@ -1,0 +1,4 @@
+#!/bin/sh
+# Use system Python and official Arch dependencies, with bauh isolated from system site-packages.
+export PYTHONPATH=/opt/ruindows-bauh${PYTHONPATH:+:$PYTHONPATH}
+exec /usr/bin/python -c 'from bauh.app import main; main()' "$@"

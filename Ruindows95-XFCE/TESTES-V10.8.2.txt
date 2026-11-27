@@ -1,0 +1,11 @@
+Ruindows95 V10.8.2 — alterações
+- Splash Plymouth com fundo vermelho-sangue
+- Textos maiores no boot splash
+- Frames da animação com fundo adaptado ao vermelho
+- Fastfetch ajustado para V10.8.2 LTS
+
+Validações locais:
+- Integridade do ZIP: OK
+- Presença dos 36 frames: OK
+- Presença de label.png e status.png: OK
+- Sintaxe do tema ruindows95.script: revisão manual

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Only run in the actual live session; never in the installed system.
+[[ $(id -un) == live && -d /run/archiso && -s /usr/share/ruindows95/system.tar.xz && -s /usr/share/ruindows95/system.sha256 ]] || exit 0
+exec xfce4-terminal --title=Instalar-Ruindows95 --hold --execute sudo /usr/local/bin/ruindows-install

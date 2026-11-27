@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Hardware e drivers
+Exec=ruindows-drivers
+Icon=preferences-system
+Terminal=false
+Categories=System;Settings;

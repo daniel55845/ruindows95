@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Instalar Ruindows95
+Comment=Instalar no disco inteiro (apaga dados)
+Exec=xfce4-terminal --title=Instalar-Ruindows95 --hold --execute sudo /usr/local/bin/ruindows-install
+Icon=system-software-install
+Terminal=false
+Categories=System;

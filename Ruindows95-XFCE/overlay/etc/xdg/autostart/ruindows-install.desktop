@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Instalar Ruindows95
+Comment=Abre o assistente de instalação no ambiente live
+Exec=/usr/local/bin/ruindows-install-autostart
+Terminal=false
+OnlyShowIn=XFCE;
+StartupNotify=false

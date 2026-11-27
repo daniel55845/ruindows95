@@ -1,0 +1,4 @@
+V10.7 completa: áudio fornecido pelo usuário, convertido localmente com FFmpeg.
+Validação WAV PCM 16-bit estéreo 48 kHz, duração e conteúdo não silencioso: OK.
+bash test.sh executado com sucesso, incluindo regressões anteriores e eventos USB simulados.
+Compilação Archiso, reprodução real PipeWire e eventos USB reais na VM não testados.
